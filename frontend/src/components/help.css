@@ -1,0 +1,60 @@
+.help-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #f9fafb;
+}
+
+.help-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #1f2937;
+}
+
+.help-intro {
+  font-size: 16px;
+  color: #4b5563;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.help-section {
+  background: white;
+  border-radius: 8px;
+  padding: 20px 25px;
+  margin-bottom: 20px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.06);
+}
+
+.help-section h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #2563eb;
+}
+
+.help-section p {
+  font-size: 15px;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.help-section ol {
+  padding-left: 20px;
+  color: #374151;
+}
+
+.faq p {
+  margin-bottom: 12px;
+}
+
+.help-link {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.help-link:hover {
+  text-decoration: underline;
+}

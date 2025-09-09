@@ -1,0 +1,160 @@
+.footer {
+  background: linear-gradient(135deg, #1e1e2f, #12121b);
+  color: #ccc;
+  padding: 30px 20px 10px;
+  font-family: 'Segoe UI', sans-serif;
+  
+
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 50px;
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 20px;
+  
+}
+.footer-brand{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.footer-brand .logos {
+  font-size: 1.4rem;
+  font-weight: bold;
+ color: #4CAF50
+}
+
+.footer-brand .tagline {
+  font-size: 0.9rem;
+  color: #888;
+  margin-left: 15px;
+}
+
+.footer-contact {
+ 
+  display: flex;
+  margin-left: 50px;
+  flex-direction: column;
+  gap: 16px;
+}
+.footer-contact p{
+  font-size: medium;
+}
+/* .footer-links a {
+  color: #bbb;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #4dd0e1; }*/
+
+
+.footer-social {
+  
+  display: flex;
+  gap: 20px;
+  font-size: 1.3rem;
+}
+
+.footer-social a {
+  color: #bbb;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-social a:hover {
+  color: #4dd0e1;
+}
+
+.footer-bottom {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #777;
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid #2c2c3a;
+}
+
+span.logos:hover{
+  color: greenyellow;
+}
+p.tagline:hover{
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-container {
+   
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 25px;
+  }
+
+  .footer-contact {
+    margin-left: 0;
+    align-items: center;
+  }
+
+  .footer-contact p {
+    font-size: 0.9rem;
+  }
+
+  .footer-brand .logo {
+    font-size: 1.4rem;
+  }
+
+  .footer-social {
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
+
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 20px 15px 10px;
+  }
+
+  .footer-brand .logo {
+    font-size: 1.2rem;
+  }
+
+  .footer-brand .tagline {
+    font-size: 0.85rem;
+  }
+
+  .footer-contact p {
+    font-size: 0.85rem;
+  }
+
+  .footer-social {
+    gap: 15px;
+    font-size: 1.1rem;
+  }
+
+  .footer-bottom {
+    font-size: 0.75rem;
+  }
+
+
+}
