@@ -1,10 +1,12 @@
 .credentials {
-  padding: 10px;
-  margin: 15px 0;
-  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 0;
+  border-radius: 10px;
   border: none;
   width: 100%;
   font-size: 1rem;
+  background: #fff;
+  color: #222;
 }
 
 .Button {
@@ -39,15 +41,15 @@ h2 {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 
-  width: 350px;  
-  max-width: 90%;
-  padding: 20px;
-  border-radius: 20px;
+  width: 420px;  
+  max-width: 92%;
+  padding: 28px 26px;
+  border-radius: 18px;
   height: auto;
-  background-color: rgba(255, 255, 255, 0.1);
-
-  margin: auto;  
-  margin-top: 8%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 10px 30px rgba(8,8,20,0.6);
+  margin: auto;
 }
 
 .Form:hover {
@@ -62,10 +64,105 @@ h2 {
   width: 100%;
 }
 
+.brand {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.logo-icon {
+  font-size: 44px;
+  color: #ffd166;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.85);
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.03);
+  padding: 12px;
+  border-radius: 14px;
+}
+
+.input-group i {
+  color: rgba(255,255,255,0.85);
+  width: 30px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.input-group .credentials {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.row.between {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.remember {
+  color: #ddd;
+  font-size: 0.9rem;
+}
+
+.forgot {
+  color: #ffd166;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.Button.primary {
+  background: linear-gradient(90deg,#6a11cb,#2575fc);
+  color: white;
+  border-radius: 10px;
+  padding: 12px;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(37,117,252,0.18);
+}
+
+.divider {
+  text-align:center;
+  color: rgba(255,255,255,0.7);
+  margin: 8px 0;
+}
+
+.socials {
+  display:flex;
+  justify-content:center;
+  gap:8px;
+}
+
+.social{
+  background: rgba(255,255,255,0.04);
+  color: white;
+  border: none;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.social.google { background: linear-gradient(90deg,#db4437,#e57248); }
+
+.foot-note {
+  text-align:center;
+  color: #ddd;
+  margin-top: 8px;
+}
+
 .background {
   width: 100%;
   height: 100vh;
-  background: linear-gradient(135deg, #1e1e2f, #4a4a78);
+  background: linear-gradient(135deg, #2c2c42, #4a4a78);
   display: flex;
   justify-content: center;
   align-items: center;

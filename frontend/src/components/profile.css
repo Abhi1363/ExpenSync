@@ -1,24 +1,24 @@
 .profile-container {
- width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
-  font-family: Arial, sans-serif;
-  margin-top:"30%";
+ width: 620px;
+  margin: 32px auto;
+  padding: 22px;
+  background: linear-gradient(180deg,#ffffff,#fbfdff);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.06);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   display: flex;
-  height: auto;
-flex-direction: column;
-
-  
+  flex-direction: column;
+  gap: 14px;
+ 
 }
 
 .profile-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
+  margin: 0;
+  color: #111827;
 }
+
+.profile-head{ display:flex; align-items:center; gap:12px }
+.profile-sub{ color:#6b7280; font-size:0.9rem }
 
 .profile-container label {
   font-weight: 700;
@@ -26,35 +26,13 @@ flex-direction: column;
   display: block;
   color: #555;
 }
-
-.profile-container input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 18px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  outline: none;
-  font-size: 14px;
-  transition: border 0.3s ease;
-}
-
-.profile-container input:focus {
-  border-color: #4cafef;
-}
-
-.profile-container button {
-
-  padding: 5px;
-  background: #4cafef;
-  color: white;
-  font-size: 14px;
-  
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.profile-container button:hover {
-  background: #3aa8df;
-}
+.profile-row{ display:flex; flex-direction:column; gap:8px }
+.inline-edit{ display:flex; gap:10px; align-items:center }
+.inline-edit input{ padding:8px 10px; border-radius:8px; border:1px solid #e6eef8; outline:none }
+.inline-edit .value{ font-weight:600 }
+.inline-edit .muted{ color:#6b7280 }
+.edit-btn, .save-btn{width: 10%; padding:2px 2px; border-radius:8px; border:none; cursor:pointer; color:#fff }
+.edit-btn{ background:linear-gradient(90deg,#60a5fa,#3b82f6) }
+.edit-btn:hover{ transform:translateY(-2px) }
+.save-btn{display: flex;gap: 10px;width: 12%;padding: 4px; background:linear-gradient(90deg,#34d399,#10b981) }
+.save-btn:hover{ transform:translateY(-2px) }

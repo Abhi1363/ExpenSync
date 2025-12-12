@@ -1,0 +1,39 @@
+/* Simple styles for Stats page */
+.stats-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 24px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  padding: 0 20px;
+}
+.kpi-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: stretch;
+}
+.kpi-card {
+  background: linear-gradient(135deg,#fff #f7fbff);
+  padding: 16px 18px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+  min-width: 180px;
+  flex: 1;
+  text-align: center;
+}
+.kpi-card h4 { margin: 0 0 8px 0; color:#555; font-size:0.95rem }
+.kpi-card .value { font-size:1.35rem; font-weight:700; color:#123; }
+
+.chart-panel {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 6px 20px rgba(2,6,23,0.04);
+}
+.chart-title { margin: 0 0 12px 0; color:#222 }
+
+@media (max-width: 768px){
+  .kpi-row { flex-direction: column; }
+}

@@ -1,13 +1,10 @@
 import React from 'react'
 import './nav.css'
-import logo from '../assets/logo.jpg'; 
 
 const nav = () => {
   return (
     <div className='navbar'>
-     <img src={logo} width={100} height={50}  alt="logo" /> <p> Expensync</p> 
-      
-      
+     <i className="fa fa-money icon small" aria-hidden="true"></i> <p> Expensync</p>
     </div>
   )
 }

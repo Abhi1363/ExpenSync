@@ -1,8 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
-
 const authRoutes = require('./routes/authRoutes');
 const userInfoRoutes = require("./routes/userInfo");
 const expensesRoutes = require("./routes/Expenses");
@@ -11,16 +9,12 @@ const path = require('path');
 const search= require("./routes/search")
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-
-
-
-
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 
-mongoose.connect('mongodb://localhost:27017/mydatabase', {
+mongoose.connect('mongodb://localhost:27017/expensync', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import axios from '../../utils/axiosInstance';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from "../../contexts/AuthContext";
 import "./login.css";
-
+import { showError, showSuccess } from "../../utils/Toast";
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,19 +20,15 @@ const Login = () => {
 
       
       const { token, user } = response.data;
-      console.log("User logging in:", user);
-
-      
       localStorage.setItem('token', token);
       localStorage.setItem('userId', user.id);
 
       login(token,user);
-
-      alert('Login successful!');
+     showSuccess("Login successful!");
       navigate('/expenseBox'); 
     } catch (error) {
       console.error("Login error:", error.response?.data?.message || error.message);
-      alert(error.response?.data?.message || "Login failed!");
+      showError("Login failed! Please check your credentials.");
     } finally {
       setLoading(false);
     }
@@ -41,32 +37,46 @@ const Login = () => {
   return (
     <div className="background">
       <form className="Form" onSubmit={handleSubmit}>
-        <div className="form-content">
-          <h2>Hey Login Here...!</h2>
+        <div className="brand">
+          <i className="fa fa-piggy-bank logo-icon" aria-hidden="true"></i>
+          <h2>Welcome Back</h2>
+          <p className="subtitle">Sign in to manage your expenses</p>
+        </div>
 
-          <input
-            className="credentials"
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input
-            className="credentials"
-            type="password"
-            placeholder="Enter Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button className="Button" type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Submit"}
+        <div className="form-content">
+          <label className="input-group">
+            <i className="fa fa-envelope" aria-hidden="true"></i>
+            <input
+              className="credentials"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </label>
+
+          <label className="input-group">
+            <i className="fa fa-lock" aria-hidden="true"></i>
+            <input
+              className="credentials"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+
+         
+
+          <button className="Button primary" type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Sign In"}
           </button>
 
-          <span style={{ marginTop: "20px" }}>
-            Not Registered? <a href="/signup" style={{ color: "whitesmoke" }}>Sign Up</a>
-          </span>
+          <div className="foot-note" >
+            Don't have an account? <Link to="/signup" style={{color:"#ffd166"}}>Create one</Link>
+          </div>
         </div>
       </form>
     </div>

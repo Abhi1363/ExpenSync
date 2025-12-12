@@ -4,6 +4,7 @@ import "./MonthlyBudget.css";
 import Footer from "./footer";
 import Sidebar from "./sidebar";
 
+
 const MonthlyBudgetTracker = () => {
   const [expenses, setExpenses] = useState([]);
   const [budget, setBudget] = useState(
@@ -51,9 +52,10 @@ const MonthlyBudgetTracker = () => {
   const remaining = budget ? budget - totalSpent : 0;
 
   const handleSetBudget = () => {
-    if (inputBudget > 0) {
-      localStorage.setItem("monthlyBudget", inputBudget); // 🔹 Save to localStorage
-      setBudget(Number(inputBudget));
+    const parsed = Number(inputBudget);
+    if (parsed > 0) {
+      localStorage.setItem("monthlyBudget", String(parsed)); // save normalized number
+      setBudget(parsed);
       setInputBudget("");
     }
   };
@@ -67,8 +69,9 @@ const MonthlyBudgetTracker = () => {
     <>
     <div style={{display:"flex"}}>
    <Sidebar></Sidebar>
+    
     <div className="budget-card">
-      <h3 className="budget-title">💰 Monthly Budget Tracker</h3>
+      <h3 className="budget-title"><i className="fa fa-money icon small" aria-hidden="true" style={{marginRight:8}}></i> Monthly Budget Tracker</h3>
 
       {!budget ? (
         <div className="set-budget">
@@ -85,11 +88,17 @@ const MonthlyBudgetTracker = () => {
         </div>
       ) : (
         <>
-          <div className="progress-bar">
-            <div
-              className={`progress-fill ${remaining < 0 ? "over-budget" : ""}`}
-              style={{ width: `${percentage}%` }}
-            ></div>
+          <div className="progress-wrapper">
+            <div className="progress-bar">
+              <div
+                className={`progress-fill ${remaining < 0 ? "over-budget" : ""}`}
+                style={{ width: `${percentage}%` }}
+              ></div>
+            </div>
+            <div className="progress-meta">
+              <span className="percent">{percentage}%</span>
+              <span className="remaining">Remaining: ₹{remaining.toLocaleString()}</span>
+            </div>
           </div>
 
           <p className="budget-info">
@@ -99,19 +108,21 @@ const MonthlyBudgetTracker = () => {
 
           <p className={`budget-status ${remaining < 0 ? "overspent" : "saved"}`}>
             {remaining < 0
-              ? `⚠️ Overspent by ₹${Math.abs(remaining).toLocaleString()}`
-              : `✅ Saved ₹${remaining.toLocaleString()} this month`}
+              ? <><i className="fa fa-exclamation-triangle" style={{color:'#c62828', marginRight:8}}/> Overspent by ₹{Math.abs(remaining).toLocaleString()}</>
+              : <><i className="fa fa-check-circle" style={{color:'#2e7d32', marginRight:8}}/> Saved ₹{remaining.toLocaleString()} this month</>}
           </p>
 
           <div className="btn-group">
             <button onClick={handleResetBudget} className="change-btn">
-              ✏️ Change Limit
+              <i className="fa fa-pencil" style={{marginRight:8}}/> Change Limit
             </button>
           </div>
         </>
       )}
     </div>
+
     </div>
+    
     <Footer></Footer>
     </>
   );

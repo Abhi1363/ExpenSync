@@ -1,5 +1,6 @@
 import { jsPDF } from 'jspdf';
 import { autoTable } from 'jspdf-autotable';
+import{showError} from"./Toast";
 
 export const downloadAllTransactions = (expenses) => {
   const doc = new jsPDF();
@@ -25,7 +26,7 @@ export const downloadAllTransactions = (expenses) => {
 
 export const downloadTransactionsByDate = (expenses, startDate, endDate) => {
   if (!startDate || !endDate) {
-    alert("Please select both start and end dates.");
+showError("Please provide both start and end dates.");
     return;
   }
 
@@ -35,7 +36,7 @@ export const downloadTransactionsByDate = (expenses, startDate, endDate) => {
   });
 
   if (filteredExpenses.length === 0) {
-    alert("No transactions found in this date range.");
+   showError("No transactions found in the selected date range.");
     return;
   }
 

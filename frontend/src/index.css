@@ -3,4 +3,30 @@
   padding: 0%
 }
 
+/* Global icon helper used across components */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #eef6ff;
+  color: #2b6fa6;
+  font-size: 18px;
+}
+.icon.small {
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.icon.inline {
+  width: auto;
+  height: auto;
+  background: transparent;
+  color: inherit;
+  font-size: 1rem;
+}
+
 

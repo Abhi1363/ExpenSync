@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import "./landingpage.css";
-import logo from "../assets/logo.jpg";
 import Video from "../assets/generated-video.mp4"
 import Footer from "./footer";
+import logo from "../assets/logo.jpg"
 
 const LandingPage = () => {
 
@@ -20,7 +20,7 @@ const LandingPage = () => {
           className="nav"
           style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
         >
-          <img src={logo} width="100px" alt="logo" />
+          <img src={logo} alt="" />
           ExpenSync
         </div>
         <nav>
@@ -77,56 +77,52 @@ const LandingPage = () => {
 
           <div className="features">
             <div className="feature-box">
-              <h3>📊 Track Expenses</h3>
+              <h3><i className="fa fa-pie-chart icon inline"/> Track Expenses</h3>
               <p>Record every transaction and keep your budget organized.</p>
             </div>
             <div className="feature-box">
-              <h3>🗂 Categories</h3>
+              <h3><i className="fa fa-folder-open icon inline"/> Categories</h3>
               <p>Group expenses into categories for better insights.</p>
             </div>
             <div className="feature-box">
-              <h3>📑 Reports</h3>
+              <h3><i className="fa fa-file-text icon inline"/> Reports</h3>
               <p>Generate reports and download them in PDF for future reference.</p>
             </div>
             <div className="feature-box">
-              <h3>🔒 Secure</h3>
+              <h3><i className="fa fa-lock icon inline"/> Secure</h3>
               <p>Your data is protected with authentication and encryption.</p>
             </div>
           </div>
         </div>
       </section>
 
-   
       <section id="reviews">
         <h2>What Our Users Say</h2>
 
         <div className="reviews-container">
-          <div className="review-card">
+            <div className="review-card">
             <div className="stars">⭐⭐⭐⭐⭐</div>
             <p>"This tracker helped me save more every month!"</p>
             <div className="reviewer">
-              <img src="https://i.pravatar.cc/100?img=1" alt="Ankit" />
+              <i className="fa fa-user-circle icon small" aria-hidden="true"></i>
               <h4>- Ankit</h4>
             </div>
           </div>
 
-          <div className="review-card">
+            <div className="review-card">
             <div className="stars">⭐⭐⭐⭐☆</div>
             <p>"Clean design and easy to use. Great work!"</p>
             <div className="reviewer">
-              <img
-                src="https://img.freepik.com/free-photo/relaxed-carefree-smiling-young-woman-wearing-white-casual-t-shirt-glasses-having-positive-facial-expression_176532-9665.jpg"
-                alt="Priya"
-              />
+              <i className="fa fa-user-circle icon small" aria-hidden="true"></i>
               <h4>- Priya</h4>
             </div>
           </div>
 
-          <div className="review-card">
+            <div className="review-card">
             <div className="stars">⭐⭐⭐⭐⭐</div>
             <p>"The statistics graphs are awesome. Very useful!"</p>
             <div className="reviewer">
-              <img src="https://i.pravatar.cc/100?img=3" alt="Rohan" />
+              <i className="fa fa-user-circle icon small" aria-hidden="true"></i>
               <h4>- Rohan</h4>
             </div>
           </div>

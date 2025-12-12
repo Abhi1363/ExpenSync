@@ -13,7 +13,6 @@ const Footer = () => {
           <p className="tagline">Track. Manage. Grow.</p>
         </div>
 
-    
         <div className="footer-contact">
          <p>
         Expensync HQ<br></br>
@@ -28,9 +27,9 @@ const Footer = () => {
         </div>
 
         <div className="footer-social">
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">🐦</a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">💼</a>
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer">💻</a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><i className="fa fa-twitter" aria-hidden="true"></i></a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i className="fa fa-linkedin" aria-hidden="true"></i></a>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer"><i className="fa fa-github" aria-hidden="true"></i></a>
         </div>
       </div>
 

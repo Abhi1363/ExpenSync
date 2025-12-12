@@ -13,7 +13,7 @@
 
 
 .sidebar {
-  width: 260px;
+  width: 300px;
   height: auto; 
   background-color: #bbbbebb0;
   padding: 20px 16px;
@@ -40,16 +40,20 @@
 
 .date-filter {
   margin: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .date{
   border-radius: 20px;
+  width: 100%;
   margin: 10px;
   padding: 5px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size:smaller;
   background-color: #ffffff;
 }
-
 
 .logo {
   font-size: 20px;
@@ -78,25 +82,46 @@ img{
 }
 
 .menu-item {
-  padding: 10px 14px;
-  border-radius: 8px;
-  margin-bottom: 8px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
   cursor: pointer;
   color: #333;
   display: flex;
   align-items: center;
-  transition: background 0.3s;
+  transition: background 0.28s cubic-bezier(.2,.9,.2,1), transform 0.2s ease, box-shadow 0.2s ease;
+  gap: 10px;
 }
 
 .menu-item:hover {
-  background-color: #e0e7ff;
+  background-color: #eef2ff;
   color: #1d4ed8;
+  transform: translateX(4px);
+  box-shadow: 0 6px 18px rgba(29,78,216,0.08);
 }
 
 .menu-item.active {
-  background-color: #1d4ed8;
-  color: white;
-  font-weight: bold;
+  background: linear-gradient(90deg,#1d4ed8,#3b82f6);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 8px 22px rgba(59,130,246,0.18);
+}
+
+/* Icon inside menu items */
+.menu-item i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(59,130,246,0.06);
+  color: #2563eb;
+  font-size: 16px;
+}
+.menu-item.active i{
+  background: rgba(255,255,255,0.14);
+  color: #fff;
 }
 .feature-box:hover{
   transform: scale(1.04);

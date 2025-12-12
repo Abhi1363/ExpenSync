@@ -8,7 +8,6 @@ module.exports = function (req, res, next) {
   }
 
   const token = authHeader.split(' ')[1]; // assuming 'Bearer <token>'
-  console.log("Incoming Authorization Header:", token);
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'defaultSecret');
