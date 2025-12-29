@@ -28,7 +28,7 @@ const ExpenseBox = () => {
   useEffect(() => {
     const fetchExpenses = async (search = "") => {
       try {
-        const res = await axios.get("http://localhost:3000/api/expenses", {
+        const res = await axios.get("/expenses", {
           params: { search },
         });
 
@@ -110,7 +110,7 @@ const ExpenseBox = () => {
     setPendingDelete(null);
 
     try {
-      await axios.delete(`http://localhost:3000/api/expenses/${_id}`);
+    await axios.delete(`/expenses/${_id}`);
 
       const updatedExpenses = expenses.filter((expense) => expense._id !== _id);
       setExpenses(updatedExpenses);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./sidebar.css";
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../utils/axiosInstance';
 import { downloadAllTransactions, downloadTransactionsByDate } from "../utils/DownloadUtils";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.jpg"
@@ -18,7 +18,7 @@ const Sidebar = () => {
     const fetchExpenses = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:3000/api/expenses", {
+        const res = await axios.get("/expenses", {
           headers: { Authorization: `Bearer ${token}` }
         });
         setExpenses(res.data);

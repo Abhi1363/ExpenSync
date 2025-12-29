@@ -17,7 +17,7 @@ const MonthlyBudgetTracker = () => {
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/expenses");
+        const res = await axios.get("/expenses");
         setExpenses(res.data);
       } catch (err) {
         console.error("Error fetching expenses:", err);

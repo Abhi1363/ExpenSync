@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../utils/axiosInstance";
 import "./profile.css";
 import Footer from "./footer";
 import Sidebar from "./sidebar";
@@ -13,7 +13,7 @@ const Profile = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/userInfo", {
+      .get("/userInfo", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -26,7 +26,7 @@ const Profile = () => {
   const handleSave = () => {
     axios
       .put(
-        "http://localhost:3000/api/userInfo",
+        "/userInfo",
         { username: newUsername },
         { headers: { Authorization: `Bearer ${token}` } }
       )

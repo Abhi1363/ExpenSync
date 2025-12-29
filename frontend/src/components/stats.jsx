@@ -13,7 +13,7 @@ const Stats = () => {
   const fetchStats = async () => {
     try {
       const token = localStorage.getItem("token"); // or auth.token
-      const res = await axios.get("http://localhost:3000/api/expenses", {
+      const res = await axios.get("/expenses", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

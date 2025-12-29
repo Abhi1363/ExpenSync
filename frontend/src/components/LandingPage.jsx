@@ -28,7 +28,7 @@ const LandingPage = () => {
           <a href="#reviews">Contact Us</a>
         </nav>
         <div className="cta-buttons">
-          <a href="http://localhost:3003/login">Get started</a>
+          <a href="/login">Get started</a>
         </div>
       </header>
 
