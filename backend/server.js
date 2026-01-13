@@ -10,7 +10,8 @@ const search= require("./routes/search")
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 const app = express();
-app.use(cors());
+const FRONTEND = process.env.FRONTEND_URL;
+app.use(cors({ origin: FRONTEND, credentials: true }));
 app.use(express.json());
 
 
@@ -27,5 +28,5 @@ app.use("/api/expenses", expensesRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/search",search)
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
