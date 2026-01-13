@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import axios from '../../utils/axiosInstance';
+import axiosInstance from '../../utils/axiosInstance';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from "../../contexts/AuthContext";
 import "./login.css";
@@ -16,7 +16,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('/auth/login', { email, password });
+      const response = await axiosInstance.post('/auth/login', { email, password });
 
       
       const { token, user } = response.data;

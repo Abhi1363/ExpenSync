@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from '../../utils/axiosInstance';
+import axiosInstance from '../../utils/axiosInstance';
 import { useNavigate, Link } from "react-router-dom";
 import "./login.css";
 import { showError, showSuccess } from "../../utils/Toast";
@@ -18,11 +18,11 @@ const Signup = () => {
     }
 
     try {
-      await axios.post('/auth/signup', { username, email, password });
+      await axiosInstance.post('/auth/signup', { username, email, password });
       showSuccess("User Signed Up Successfully!");
       navigate('/login');
     } catch (error) {
-      console.error('Signup failed:', error.response?.data || error.message);
+      console.error('Signup failedaxiosinstance.:', error.response?.data || error.message);
       showError("Signup failed! Please try again.");
     }
   };
