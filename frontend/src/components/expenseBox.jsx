@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./expenseBox.css";
-import axios from '../utils/axiosInstance';
+import axiosInstance from '../utils/axiosInstance';
 import Footer from "./footer";
 import Sidebar from "./sidebar";
 import { showSuccess, showError } from "../utils/Toast";
@@ -28,7 +28,7 @@ const ExpenseBox = () => {
   useEffect(() => {
     const fetchExpenses = async (search = "") => {
       try {
-        const res = await axios.get("/expenses", {
+        const res = await axiosInstance.get("/expenses", {
           params: { search },
         });
 
@@ -71,7 +71,7 @@ const ExpenseBox = () => {
 
     try {
 
-      const res = await axios.post("/expenses", {
+      const res = await axiosInstance.post("/expenses", {
         description,
         amount: parseFloat(amount),
         category
@@ -110,7 +110,7 @@ const ExpenseBox = () => {
     setPendingDelete(null);
 
     try {
-    await axios.delete(`/expenses/${_id}`);
+    await axiosInstance.delete(`/expenses/${_id}`);
 
       const updatedExpenses = expenses.filter((expense) => expense._id !== _id);
       setExpenses(updatedExpenses);

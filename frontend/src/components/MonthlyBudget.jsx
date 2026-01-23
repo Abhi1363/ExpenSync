@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import axios from "../utils/axiosInstance";
+import axiosInstance from "../utils/axiosInstance";
 import "./MonthlyBudget.css";
 import Footer from "./footer";
 import Sidebar from "./sidebar";
@@ -17,7 +17,7 @@ const MonthlyBudgetTracker = () => {
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const res = await axios.get("/expenses");
+        const res = await axiosInstance.get("/expenses");
         setExpenses(res.data);
       } catch (err) {
         console.error("Error fetching expenses:", err);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../utils/axiosInstance";
+import axiosInstance from "../utils/axiosInstance";
 
 import ExpensePie from "./StatsComponents/piecharts";
 import { AreaChart, Area, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
@@ -13,7 +13,7 @@ const Stats = () => {
   const fetchStats = async () => {
     try {
       const token = localStorage.getItem("token"); // or auth.token
-      const res = await axios.get("/expenses", {
+      const res = await axiosInstance.get("/expenses", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
