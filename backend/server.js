@@ -10,17 +10,18 @@ const search= require("./routes/search")
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 const app = express();
-const FRONTEND = process.env.FRONTEND_URL;
+const FRONTEND = process.env.FRONTEND_URL || "http://localhost:5173";
 app.use(cors({ origin: FRONTEND, credentials: true }));
 app.use(express.json());
 
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log('MongoDB Connected!!!'))
-.catch((err) => console.log(err));
+.catch((err) => console.log(err));  
+
+app.get('/', (req, res) => {
+  res.send('Expense Tracker API is running');
+});
 
 // Routes
 app.use("/api/userInfo", userInfoRoutes);
