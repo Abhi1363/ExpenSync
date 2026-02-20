@@ -18,14 +18,15 @@ const Login = () => {
     try {
       const response = await axiosInstance.post('/auth/login', { email, password });
 
-      
+
+
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       localStorage.setItem('userId', user.id);
 
-      login(token,user);
-     showSuccess("Login successful!");
-      navigate('/expenseBox'); 
+      login(token, user);
+      showSuccess("Login successful!");
+      navigate('/expenseBox');
     } catch (error) {
       console.error("Login error:", error.response?.data?.message || error.message);
       showError("Login failed! Please check your credentials.");
@@ -68,14 +69,14 @@ const Login = () => {
             />
           </label>
 
-         
+
 
           <button className="Button primary" type="submit" disabled={loading}>
             {loading ? "Logging in..." : "Sign In"}
           </button>
 
           <div className="foot-note" >
-            Don't have an account? <Link to="/signup" style={{color:"#ffd166"}}>Create one</Link>
+            Don't have an account? <Link to="/signup" style={{ color: "#ffd166" }}>Create one</Link>
           </div>
         </div>
       </form>

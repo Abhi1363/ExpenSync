@@ -54,71 +54,74 @@ const Stats = () => {
   // Additional KPIs
   const totalSpentAll = expenses.reduce((s, e) => s + Number(e.amount || 0), 0);
   const avgPerExpense = expenses.length ? (totalSpentAll / expenses.length).toFixed(2) : 0;
-  const topCategory = Object.entries(categoryTotals).sort((a,b)=>b[1]-a[1])[0]?.[0] || '—';
+  const topCategory = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1])[0]?.[0] || '—';
 
   return (
-<>
-    <div style={{display:"flex"}}>
-    <Sidebar />
+    <>
+      <div style={{ display: "flex" }}>
+        <Sidebar />
 
-    <div className="stats-container">
-      <div className="kpi-row">
-        <div className="kpi-card">
-          <h4>Total Spent</h4>
-          <div className="value">₹{totalSpentAll.toLocaleString()}</div>
+        <div className="stats-container">
+          <div className="kpi-row">
+
+
+            <div className="kpi-card">
+              <h4>Total Spent</h4>
+              <div className="value">₹{totalSpentAll.toLocaleString()}</div>
+            </div>
+            <div className="kpi-card">
+              <h4>Avg / Expense</h4>
+              <div className="value">₹{avgPerExpense}</div>
+            </div>
+            <div className="kpi-card">
+              <h4>Top Category</h4>
+              <div className="value">{topCategory}</div>
+            </div>
+          </div>
+
+          <div className="chart-box">
+            <div className="chart-panel" >
+              <h3 className="chart-title" >Individual Expenses</h3>
+              <ExpensePie expenses={expenses} />
+            </div>
+
+            <div className="chart-panel">
+              <h3 className="chart-title">Category wise spending line graph</h3>
+              <ResponsiveContainer width="100%" height={320} >
+                <LineChart data={lineChartData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="category" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="amount" stroke="#4CAF50" strokeWidth={3} dot={{ r: 4 }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+
+            <div className="chart-panel">
+              <h3 className="chart-title">Weekly Spending Trend</h3>
+              <ResponsiveContainer width="100%" height={320}>
+                <AreaChart data={weeklyData}>
+                  <defs>
+                    <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#4CAF50" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#4CAF50" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="day" />
+                  <YAxis />
+                  <Tooltip />
+                  <Area type="monotone" dataKey="amount" stroke="#4CAF50" fillOpacity={1} fill="url(#colorAmount)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
         </div>
-        <div className="kpi-card">
-          <h4>Avg / Expense</h4>
-          <div className="value">₹{avgPerExpense}</div>
-        </div>
-        <div className="kpi-card">
-          <h4>Top Category</h4>
-          <div className="value">{topCategory}</div>
-        </div>
+
       </div>
-
-      <div className="chart-panel" >
-        <h3 className="chart-title" >Individual Expenses</h3>
-        <ExpensePie expenses={expenses} />
-      </div>
-
-      <div className="chart-panel">
-        <h3 className="chart-title">Category wise spending line graph</h3>
-        <ResponsiveContainer width="100%" height={320} >
-          <LineChart data={lineChartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="category" />
-            <YAxis />
-            <Tooltip />
-            <Line type="monotone" dataKey="amount" stroke="#4CAF50" strokeWidth={3} dot={{ r: 4 }} />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-
-      <div className="chart-panel">
-        <h3 className="chart-title">Weekly Spending Trend</h3>
-        <ResponsiveContainer width="100%" height={320}>
-          <AreaChart data={weeklyData}>
-            <defs>
-              <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#4CAF50" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#4CAF50" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="day" />
-            <YAxis />
-            <Tooltip />
-            <Area type="monotone" dataKey="amount" stroke="#4CAF50" fillOpacity={1} fill="url(#colorAmount)" />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
-
-    </div>
-
-</div>
-<Footer></Footer>
-</>
+      <Footer></Footer>
+    </>
   );
 };
 

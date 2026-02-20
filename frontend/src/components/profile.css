@@ -1,5 +1,6 @@
 .profile-container {
  width: 620px;
+ height: 50vh;
   margin: 32px auto;
   padding: 22px;
   background: linear-gradient(180deg,#ffffff,#fbfdff);
