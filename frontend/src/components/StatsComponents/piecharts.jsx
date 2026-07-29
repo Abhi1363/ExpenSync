@@ -15,17 +15,52 @@ const mapIndividualExpenses = (expenses = []) => {
 
 const PieChartComponent = ({ expenses = [] }) => {
   const data = mapIndividualExpenses(expenses);
+  const legendData = data.map((entry, index) => ({
+    value: entry.name,
+    type: 'square',
+    id: entry.id || index,
+    color: COLORS[index % COLORS.length],
+  }));
+
+  const renderLegend = (props) => {
+    const { payload } = props;
+    return (
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, minmax(120px, 1fr))',
+        gap: '16px 50px',
+        justifyItems: 'start',
+        marginTop: 12,
+        width: '100%',
+      }}>
+        {payload.map((entry) => (
+          <div key={entry.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap', fontSize: '0.9rem', color: '#2a1c1c' }}>
+            <span style={{ width: 14, height: 14, backgroundColor: entry.color, display: 'inline-block', borderRadius: 3 }} />
+            <span>{entry.value}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', padding: 24 }}>
-      <PieChart width={400} height={300}>
-        <Pie data={data} cx="50%" cy="50%" outerRadius={100} label dataKey="amount">
+    <div style={{ display: 'flex', justifyContent: 'center', padding: 24, width: '100%' }}>
+      <PieChart width={620} height={550}>
+        <Pie
+          data={data}
+          cx="50%"
+          cy="40%"
+          outerRadius={120}
+          labelLine={false}
+          label={({ name }) => name}
+          dataKey="amount"
+        >
           {data.map((_, index) => (
             <Cell key={index} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
         <Tooltip />
-        <Legend />
+        <Legend content={renderLegend} payload={legendData} />
       </PieChart>
     </div>
   );

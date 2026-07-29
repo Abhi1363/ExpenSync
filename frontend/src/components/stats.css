@@ -46,9 +46,23 @@
   padding: 18px;
   width: 80%;
   box-shadow: 0 6px 20px rgba(2,6,23,0.04);
+  overflow: hidden;
 }
 .chart-title { margin: 0 0 12px 0; color:#222 }
 
+.chart-panel .recharts-legend-wrapper {
+  max-width: 180px;
+}
+
+@media (max-width: 1024px) {
+  .chart-panel {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px){
   .kpi-row { flex-direction: column; }
+  .chart-box {
+    gap: 30px;
+  }
 }

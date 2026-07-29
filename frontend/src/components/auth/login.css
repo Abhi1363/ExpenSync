@@ -168,11 +168,6 @@ h2 {
   align-items: center;
 }
 
-span {
-  margin-left: 10px;
-  font-size: 0.9rem;
-  color: #ddd;
-}
 
 
 @media (max-width: 768px) {

@@ -1,5 +1,5 @@
-const express = require("express");
-const Expense = require("../models/expenseSchema");
+import express from 'express';
+import Expense from '../models/expenseSchema.js';
 
 const router = express.Router();
 
@@ -26,4 +26,4 @@ router.get("/", async (req, res) => {
 });
 
 
-module.exports = router;
+export default router;

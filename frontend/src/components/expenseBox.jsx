@@ -14,6 +14,8 @@ const ExpenseBox = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [open, setOpen] = useState(false);
   const [pendingDelete, setPendingDelete] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const expensesPerPage = 10;
 
 
   //1
@@ -89,6 +91,7 @@ const ExpenseBox = () => {
 
       setDescription("");
       setAmount("");
+      setCategory("")
 
       showSuccess("Expense added successfully!");
     } catch (err) {
@@ -162,6 +165,16 @@ const ExpenseBox = () => {
     (a, b) => new Date(b.date) - new Date(a.date)
   );
 
+  const totalPages = Math.max(1, Math.ceil(sortedExpenses.length / expensesPerPage));
+  const pageStart = (currentPage - 1) * expensesPerPage;
+  const pageExpenses = sortedExpenses.slice(pageStart, pageStart + expensesPerPage);
+
+  React.useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
   const categoryTotals = expenses.reduce((acc, curr) => {
     if (!acc[curr.category]) {
       acc[curr.category] = 0;
@@ -173,6 +186,17 @@ const ExpenseBox = () => {
   const sortedCategories = Object.entries(categoryTotals)
     .sort((a, b) => b[1] - a[1]); // [ ['Food', 100], ['Travel', 60], ... ]
 
+  const categoryColors = ["#4CAF50", "#FFB74D", "#42A5F5", "#9C27B0", "#00BFA5", "#FF7043"];
+
+  const chartGradient = sortedCategories.reduce((gradient, [category, amount], index) => {
+    const percentage = totalExpense ? (amount / totalExpense) * 100 : 0;
+    const start = gradient.lastEnd ?? 0;
+    const end = start + percentage;
+    const color = categoryColors[index % categoryColors.length];
+    gradient.stops.push(`${color} ${start}% ${end}%`);
+    gradient.lastEnd = end;
+    return gradient;
+  }, { stops: [], lastEnd: 0 }).stops.join(", ");
 
   return (
     <>
@@ -212,7 +236,7 @@ const ExpenseBox = () => {
             <div className="total">
               <div className="totalAmount">
                 <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-                  <i className="fa fa-credit-card icon" aria-hidden="true"></i>
+                  <i style={{width:"50px", height:"50px"}} className="fa fa-credit-card icon" aria-hidden="true"></i>
                   <b>Total Amount</b>
                 </div>
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "5px", marginLeft: "25%" }}>
@@ -228,12 +252,13 @@ const ExpenseBox = () => {
 
               <div className="totalExpense">
                 <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-                  <i className="fa fa-shopping-cart icon small" aria-hidden="true"></i>
+                  <i style={{width:"50px", height:"50px"}} className="fa fa-shopping-cart icon" aria-hidden="true"></i>
                   <b>Total Expense</b>
                 </div>
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "5px", marginLeft: "25%" }}>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "5px"}}>
                   <b>₹</b>
-                  <input type="number" value={totalExpense} readOnly />
+                  {/* <input type="number" value={totalExpense} readOnly /> */}
+                  <span>{totalExpense}</span>
                 </div>
               </div>
             </div>
@@ -281,27 +306,43 @@ const ExpenseBox = () => {
 
             <div className="category-progress">
               <h3>Category-wise Spending</h3>
-
-              {sortedCategories.map(([category, amount]) => {
-                const percentage = ((amount / totalExpense) * 100).toFixed(2);
-                return (
-                  <div key={category} className="category-bar">
-                    <div className="category-label">
-                      <strong>{category}</strong> - ₹{amount} ({percentage}%)
-                    </div>
-                    <div className="progress-container">
-                      <div
-                        className="progress-fill"
-                        style={{
-                          width: `${percentage}%`,
-                          backgroundColor: "#4CAF50",
-                        }}
-                      />
-                    </div>
+              <div className="category-summary">
+                <div
+                  className="donut-chart"
+                  style={{
+                    background: totalExpense
+                      ? `conic-gradient(${chartGradient})`
+                      : "#f0f0f0",
+                  }}
+                >
+                  <div className="donut-hole" />
+                  <div className="donut-center">
+                    <div className="donut-total">₹{totalExpense.toFixed(0)}</div>
+                    <div className="donut-label">Total</div>
                   </div>
-                );
-              })}
-
+                </div>
+                <div className="legend">
+                  {sortedCategories.map(([category, amount], idx) => {
+                    const percentage = totalExpense
+                      ? ((amount / totalExpense) * 100).toFixed(2)
+                      : "0.00";
+                    return (
+                      <div key={category} className="category-item">
+                        <div className="category-meta">
+                          <span
+                            className="legend-dot"
+                            style={{ backgroundColor: categoryColors[idx % categoryColors.length] }}
+                          />
+                          <span className="category-name">{category}</span>
+                        </div>
+                        <div className="category-value">
+                          ₹{amount} · {percentage}%
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
           <div className="line"></div>
@@ -347,7 +388,7 @@ const ExpenseBox = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {sortedExpenses.map((expense) => (
+                  {pageExpenses.map((expense) => (
                     <tr key={expense._id}>
                       <td>{expense.description}</td>
 
@@ -368,6 +409,36 @@ const ExpenseBox = () => {
                   ))}
                 </tbody>
               </table>
+
+              {totalPages > 1 && (
+                <div className="pagination">
+                  <button
+                    className="page-button"
+                    disabled={currentPage === 1}
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  >
+                    Prev
+                  </button>
+
+                  {Array.from({ length: totalPages }, (_, idx) => idx + 1).map((page) => (
+                    <button
+                      key={page}
+                      className={`page-button ${page === currentPage ? "active" : ""}`}
+                      onClick={() => setCurrentPage(page)}
+                    >
+                      {page}
+                    </button>
+                  ))}
+
+                  <button
+                    className="page-button"
+                    disabled={currentPage === totalPages}
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <p className="quote">

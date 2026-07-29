@@ -1,13 +1,12 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const authRoutes = require('./routes/authRoutes');
-const userInfoRoutes = require("./routes/userInfo");
-const expensesRoutes = require("./routes/Expenses");
-const dotenv = require('dotenv');
-const path = require('path');
-const search= require("./routes/search")
-dotenv.config({ path: path.resolve(__dirname, '.env') });
+import './loadEnv.js';
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import authRoutes from './routes/authRoutes.js';
+import userInfoRoutes from './routes/userInfo.js';
+import expensesRoutes from './routes/Expenses.js';
+import search from './routes/search.js';
+import aiRoutes from './routes/ai.js';
 
 const app = express();
 const FRONTEND = process.env.FRONTEND_URL || "http://localhost:5173";
@@ -28,6 +27,7 @@ app.use("/api/userInfo", userInfoRoutes);
 app.use("/api/expenses", expensesRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/search",search)
+app.use("/api/ai", aiRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

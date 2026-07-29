@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
+import Expense from '../models/expenseSchema.js';
+import authMiddleware from '../middleware/authMiddleware.js';
+import { storeExpenseVector } from '../services/chroma.service.js';
+
 const router = express.Router();
-const Expense = require('../models/expenseSchema');
-const authMiddleware = require('../middleware/authMiddleware');
-
-
 
 router.get('/',authMiddleware, async (req, res) => {
   try {
@@ -13,9 +13,6 @@ router.get('/',authMiddleware, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-
-
 
 router.post('/',authMiddleware, async (req, res) => {
   const { description, amount,date,category } = req.body;
@@ -33,6 +30,10 @@ router.post('/',authMiddleware, async (req, res) => {
   try {
     const savedExpense = await newExpense.save();
     res.status(201).json(savedExpense);
+    const expenseForVector = { ...savedExpense.toObject(), user: savedExpense.userId };
+    storeExpenseVector(expenseForVector).catch((err) => {
+      console.error('storeExpenseVector failed:', err?.message || err);
+    });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -58,4 +59,4 @@ router.delete("/:id",authMiddleware, async (req, res) => {
 
 
 
-module.exports = router;
+export default router;

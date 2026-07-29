@@ -14,10 +14,14 @@
 
 .sidebar {
   width: 300px;
+  min-width: 300px;
+  max-width: 300px;
+  flex: 0 0 300px;
   height: auto; 
   background-color: #bbbbebb0;
   padding: 20px 16px;
   box-shadow: 1px 0 5px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
 
   display: flex;
   flex-direction: column;
