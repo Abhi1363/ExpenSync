@@ -11,6 +11,7 @@ import Help from './components/help';
 import Profile from './components/profile';
 import LandingPage from './components/LandingPage';
 import MonthlyBudgetTracker from './components/MonthlyBudget';
+import AiChat from './components/AiChat';
 
 
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="/help" element={<Help />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/monthlyBudget" element={<MonthlyBudgetTracker expenses />} />
+          <Route path="/aiChat" element={<AiChat />} />
           
           <Route
             path="/expenseBox"

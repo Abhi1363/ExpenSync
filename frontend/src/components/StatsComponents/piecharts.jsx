@@ -28,13 +28,13 @@ const PieChartComponent = ({ expenses = [] }) => {
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(3, minmax(120px, 1fr))',
-        gap: '16px 50px',
+        gap: '12px 30px',
         justifyItems: 'start',
-        marginTop: 12,
+        marginTop: 6,
         width: '100%',
       }}>
         {payload.map((entry) => (
-          <div key={entry.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap', fontSize: '0.9rem', color: '#2a1c1c' }}>
+          <div key={entry.id} style={{ display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', fontSize: '0.9rem', color: '#2a1c1c' }}>
             <span style={{ width: 14, height: 14, backgroundColor: entry.color, display: 'inline-block', borderRadius: 3 }} />
             <span>{entry.value}</span>
           </div>
@@ -44,12 +44,12 @@ const PieChartComponent = ({ expenses = [] }) => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', padding: 24, width: '100%' }}>
-      <PieChart width={620} height={550}>
+    <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 24px', width: '100%' }}>
+      <PieChart width={620} height={480}>
         <Pie
           data={data}
           cx="50%"
-          cy="40%"
+          cy="45%"
           outerRadius={120}
           labelLine={false}
           label={({ name }) => name}

@@ -1,8 +1,8 @@
 .help-container {
-  max-width: 900px;
-  margin: auto;
-  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
+  height: 120vh;
   padding: 20px 16px;
   font-family: "Segoe UI", Arial, sans-serif;
   background-color: #f9fafb;
@@ -32,6 +32,7 @@
   display: flex;
   height: auto;
   justify-content: start;
+  flex-direction: column;
   border-radius: 8px;
   padding: 12px 16px;
   margin-bottom: 12px;

@@ -26,10 +26,11 @@ export const storeExpenseVector = async (expense) => {
         embeddings: [embedding],
         metadatas: [
             {
-                userId,
+                userId: expense.userId.toString(),
                 category: expense.category,
                 amount: expense.amount,
                 date: metadataDate,
+                description: expense.description,
             },
         ],
     });
@@ -38,5 +39,13 @@ export const storeExpenseVector = async (expense) => {
 });
 
 console.log(JSON.stringify(data, null, 2));
+}
+
+export async function deleteExpenseVector(expenseId) {
+    const collection = await getExpenseCollection();
+
+    await collection.delete({
+        ids: [expenseId.toString()],
+    });
 }
 

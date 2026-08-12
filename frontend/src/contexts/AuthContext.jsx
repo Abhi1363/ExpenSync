@@ -1,5 +1,6 @@
 // src/contexts/AuthContext.jsx
 import { createContext, useEffect, useState } from "react";
+import axiosInstance from "../utils/axiosInstance";
 
 export const AuthContext = createContext();
 
@@ -13,7 +14,11 @@ export const AuthProvider = ({ children }) => {
 
     if (storedToken && storedUserId) {
       setToken(storedToken);
-      setUser({ id: storedUserId });
+      // try to fetch full user info (username, email, createdAt)
+      axiosInstance
+        .get("/userInfo")
+        .then((res) => setUser(res.data))
+        .catch(() => setUser({ id: storedUserId }));
     }
   }, []);
 

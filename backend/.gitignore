@@ -4,3 +4,7 @@ dist/
 build/
 
 *.log
+
+User enters a query/
+
+Expense added and stored in vector DB/

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import axiosInstance from "../utils/axiosInstance";
+import { getCurrentMonthTransactions } from "../utils/monthlyUtils";
 import "./MonthlyBudget.css";
 import Footer from "./footer";
 import Sidebar from "./sidebar";
@@ -26,20 +27,9 @@ const MonthlyBudgetTracker = () => {
     fetchExpenses();
   }, []);
 
-  const now = new Date();
-  const currentMonth = now.getMonth();
-  const currentYear = now.getFullYear();
-
   const monthlyExpenses = useMemo(() => {
-    return expenses.filter((exp) => {
-      if (!exp.date) return false;
-      const expDate = new Date(exp.date);
-      return (
-        expDate.getMonth() === currentMonth &&
-        expDate.getFullYear() === currentYear
-      );
-    });
-  }, [expenses, currentMonth, currentYear]);
+    return getCurrentMonthTransactions(expenses);
+  }, [expenses]);
 
   const totalSpent = monthlyExpenses.reduce(
     (sum, exp) => sum + Number(exp.amount || 0),

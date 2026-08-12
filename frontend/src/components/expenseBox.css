@@ -490,13 +490,14 @@ button:hover {
   justify-content: center;
   align-items: center;
   gap: 50px;
+  width: 85%;
   margin-top: 10px;
-  flex-wrap: wrap;
 }
 
 .totalAmount,
-.totalExpense {
-  width: 40%;
+.totalExpense,
+.totalTransaction {
+  width: 33%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -749,7 +750,8 @@ button:hover {
   }
 
   .totalAmount,
-  .totalExpense {
+  .totalExpense,
+  .totalTransaction {
     min-width: 120px;
     padding: 15px;
   }

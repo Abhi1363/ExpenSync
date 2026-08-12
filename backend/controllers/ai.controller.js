@@ -1,10 +1,11 @@
 import { chatWithAI } from "../services/chat.service.js";
 import { getExpenseCollection } from "../services/chroma.service.js";
-
+import { retrieveExpenses } from "../services/retriever.service.js";
 
 export const chat = async (req, res) => {
   try {
     const { message } = req.body;
+    const userId = req.user?.id;
 
     if (!message) {
       return res.status(400).json({
@@ -13,7 +14,17 @@ export const chat = async (req, res) => {
       });
     }
 
-    const reply = await chatWithAI(message);
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized: user ID is missing",
+      });
+    }
+
+    console.log(req.user);
+    console.log("User ID:", userId);
+
+    const reply = await chatWithAI(message, userId);
 
     res.json({
       success: true,
@@ -45,4 +56,18 @@ export const testCollection = async (req, res) => {
       message: error.message,
     });
   }
+}
+
+  export const search = async (req, res) => {
+    try {
+        const { query, userId } = req.body;
+
+        const result = await retrieveExpenses(query, userId);
+
+        res.json(result);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err.message);
+    }
 };
+;

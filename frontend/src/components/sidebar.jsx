@@ -125,6 +125,10 @@ const Sidebar = () => {
             <Link to="/monthlyBudget" style={{ textDecoration: "none", color: "#333" }}><i className="fa fa-money icon inline" /> Monthly Budget Tracker</Link>
           </li>
 
+          <li className="menu-item">
+            <Link to="/aiChat" style={{ textDecoration: "none", color: "#333" }}><i className="fa fa-comments icon inline" /> AI Chat</Link>
+          </li>
+
         </ul>
       </div>
 

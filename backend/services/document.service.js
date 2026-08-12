@@ -1,13 +1,12 @@
 export const createExpenseDocument = (expense) => {
   return `
-Merchant: ${expense.merchant}
 
-Amount: ₹${expense.amount}
+  Category: ${expense.category}
 
-Category: ${expense.category}
-
-Date: ${expense.date}
-
-Description: ${expense.description || ""}
+  Amount: ₹${expense.amount}
+  
+  Date: ${expense.date}
+ 
+  Description: ${expense.description || ""}
 `;
 };

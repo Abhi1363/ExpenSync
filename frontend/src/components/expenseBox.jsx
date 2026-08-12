@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./expenseBox.css";
 import axiosInstance from '../utils/axiosInstance';
+import { getCurrentMonthTransactions } from "../utils/monthlyUtils";
 import Footer from "./footer";
 import Sidebar from "./sidebar";
 import { showSuccess, showError } from "../utils/Toast";
@@ -165,6 +166,12 @@ const ExpenseBox = () => {
     (a, b) => new Date(b.date) - new Date(a.date)
   );
 
+  const monthlyTransactions = useMemo(() => {
+    return getCurrentMonthTransactions(expenses);
+  }, [expenses]);
+
+  const monthlyTransactionCount = monthlyTransactions.length;
+
   const totalPages = Math.max(1, Math.ceil(sortedExpenses.length / expensesPerPage));
   const pageStart = (currentPage - 1) * expensesPerPage;
   const pageExpenses = sortedExpenses.slice(pageStart, pageStart + expensesPerPage);
@@ -259,6 +266,16 @@ const ExpenseBox = () => {
                   <b>₹</b>
                   {/* <input type="number" value={totalExpense} readOnly /> */}
                   <span>{totalExpense}</span>
+                </div>
+              </div>
+
+              <div className="totalTransaction">
+                <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+                  <i style={{width:"50px", height:"50px"}} className="fa fa-list icon" aria-hidden="true"></i>
+                  <b>Month's Transactions</b>
+                </div>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "5px"}}>
+                  <span>{monthlyTransactionCount}</span>
                 </div>
               </div>
             </div>

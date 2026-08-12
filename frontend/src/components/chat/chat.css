@@ -1,0 +1,171 @@
+/* Polished AI chat styles */
+.ai-chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(23, 43, 77, 0.08);
+  overflow: hidden;
+  margin: 0px 40px;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: linear-gradient(90deg,#1e88e5,#5aa8ff);
+  color: #fff;
+}
+
+.chat-header .title {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.chat-header .status {
+  font-size: 12px;
+  opacity: 0.95;
+  background: rgba(255,255,255,0.12);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.messages {
+  flex: 1 1 auto;
+  padding: 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: linear-gradient(180deg, rgba(242,247,255,0.6), transparent);
+}
+
+.message-bubble {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  max-width: 85%;
+}
+
+.message-bubble.assistant {
+  align-self: flex-start;
+}
+
+.message-bubble.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.message-bubble .avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #fff;
+}
+
+.message-bubble.assistant .avatar {
+  background: #2f80ed;
+}
+
+.message-bubble.user .avatar {
+  background: #2563eb;
+}
+
+.message-bubble .bubble {
+  padding: 12px 16px;
+  border-radius: 12px;
+  line-height: 1.4;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(16,24,40,0.06);
+}
+
+/* Keep avatar at fixed size and prevent it from shrinking when bubble grows */
+.message-bubble .avatar {
+  flex: 0 0 36px;
+}
+
+/* Allow bubble to grow but prevent overflow from affecting avatar */
+.message-bubble .bubble {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.message-bubble.assistant .bubble {
+  background: #ffffff;
+  color: #111827;
+}
+
+.message-bubble.user .bubble {
+  background: linear-gradient(90deg,#3b82f6,#1e40af);
+  color: #fff;
+}
+
+.chat-textarea-container {
+  padding: 14px 18px;
+  background: #fff;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.chat-textarea {
+  flex: 1 1 auto;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #e6eefc;
+  outline: none;
+  font-size: 14px;
+}
+
+.send-button {
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.send-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.chat-empty {
+  color: #6b7280;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* Fallback styling for existing textarea/button elements when ChatInput isn't updated */
+.ai-chat-wrapper textarea,
+.ai-chat-wrapper textarea {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #e6eefc;
+  outline: none;
+  font-size: 14px;
+  width: 50%;
+}
+
+.ai-chat-wrapper button {
+  background: linear-gradient(90deg,#1e88e5,#5aa8ff);
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.ai-chat-wrapper button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}

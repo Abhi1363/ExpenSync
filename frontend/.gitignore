@@ -31,3 +31,6 @@ dist/
 build/
 .env
 *.log
+
+backend/chroma/
+backend/chroma/*

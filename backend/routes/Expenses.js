@@ -1,7 +1,7 @@
 import express from 'express';
 import Expense from '../models/expenseSchema.js';
 import authMiddleware from '../middleware/authMiddleware.js';
-import { storeExpenseVector } from '../services/chroma.service.js';
+import { storeExpenseVector,deleteExpenseVector } from '../services/chroma.service.js';
 
 const router = express.Router();
 
@@ -39,24 +39,31 @@ router.post('/',authMiddleware, async (req, res) => {
   }
 });
 
-router.delete("/:id",authMiddleware, async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const deletedExpense = await Expense.findByIdAndDelete(req.params.id);
 
     if (!deletedExpense) {
-      return res.status(404).json({ message: "Expense not found." });
+      return res.status(404).json({
+        message: "Expense not found."
+      });
     }
 
-    res.status(200).json(deletedExpense);
+    await deleteExpenseVector(deletedExpense._id);
+
+    res.status(200).json({
+      success: true,
+      message: "Expense deleted successfully.",
+      deletedExpense
+    });
+
   } catch (err) {
-    res.status(500).json({ message: err.message });
+
+    res.status(500).json({
+      message: err.message
+    });
+
   }
-});
-
-
-
-
-
-
+})
 
 export default router;
