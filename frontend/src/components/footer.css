@@ -1,10 +1,8 @@
 .footer {
-  background: linear-gradient(135deg, #1e1e2f, #12121b);
+  background: linear-gradient(180deg, #0a1020 0%, #111c35 50%, #0e162b 100%);
   color: #ccc;
-  padding: 30px 20px 10px;
+  padding: 10px 20px 10px;
   font-family: 'Segoe UI', sans-serif;
-  
-
 }
 
 .footer-container {
@@ -43,7 +41,6 @@
  
   display: flex;
   margin-left: 50px;
-  flex-direction: column;
   gap: 16px;
 }
 .footer-contact p{

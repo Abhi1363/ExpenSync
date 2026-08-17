@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axiosInstance from '../../utils/axiosInstance';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from "../../contexts/AuthContext";
@@ -10,6 +10,19 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handlePopState = () => {
+      navigate("/", { replace: true });
+    };
+
+    window.history.pushState({ loginPage: true }, "", window.location.href);
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

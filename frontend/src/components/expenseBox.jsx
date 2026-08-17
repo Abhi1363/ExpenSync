@@ -3,8 +3,10 @@ import "./expenseBox.css";
 import axiosInstance from "../utils/axiosInstance";
 import { getCurrentMonthTransactions } from "../utils/monthlyUtils";
 import Sidebar from "./sidebar";
+import Footer from "./footer";
 import { showSuccess, showError } from "../utils/Toast";
 import { AuthContext } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const categoryIcons = {
   Shopping: "fa fa-shopping-bag",
@@ -35,15 +37,17 @@ const ExpenseBox = () => {
   const [open, setOpen] = useState(false);
   const [pendingDelete, setPendingDelete] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalAmountInput, setTotalAmountInput] = useState(() => {
+    const storedTotal =
+      localStorage.getItem("userTotalAmount") ?? localStorage.getItem("initialTotalAmount");
+    return storedTotal ? String(storedTotal) : "";
+  });
+  const [totalAmount, setTotalAmount] = useState(() => {
+    const storedTotal =
+      localStorage.getItem("userTotalAmount") ?? localStorage.getItem("initialTotalAmount");
+    return storedTotal ? Number(storedTotal) : 0;
+  });
   const expensesPerPage = 10;
-
-  const [initialTotalAmount] = useState(
-    localStorage.getItem("initialTotalAmount")
-      ? parseFloat(localStorage.getItem("initialTotalAmount"))
-      : 0
-  );
-
-  const [remainingAmount, setRemainingAmount] = useState(initialTotalAmount);
 
   useEffect(() => {
     const fetchExpenses = async (search = "") => {
@@ -56,23 +60,36 @@ const ExpenseBox = () => {
 
         const totalSpent = res.data.reduce((acc, expense) => acc + expense.amount, 0);
         setTotalExpense(totalSpent);
-
-        const remaining = initialTotalAmount - totalSpent;
-        setRemainingAmount(remaining);
-        localStorage.setItem("remainingAmount", remaining);
       } catch (error) {
         console.error("Error fetching expenses:", error);
       }
     };
 
     fetchExpenses(searchTerm);
-  }, [searchTerm, initialTotalAmount]);
+  }, [searchTerm]);
 
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);
 
   const handleAmount = (e) => setAmount(e.target.value);
+
+  const handleTotalAmountChange = (e) => setTotalAmountInput(e.target.value);
+
+  const handleSetTotalAmount = (e) => {
+    e.preventDefault();
+
+    const parsedTotal = Number(totalAmountInput);
+    if (Number.isNaN(parsedTotal) || parsedTotal <= 0) {
+      showError("Please enter a valid total amount.");
+      return;
+    }
+
+    localStorage.setItem("userTotalAmount", String(parsedTotal));
+    localStorage.removeItem("initialTotalAmount");
+    setTotalAmount(parsedTotal);
+    showSuccess("Total amount saved successfully!");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,10 +110,6 @@ const ExpenseBox = () => {
 
       const updatedExpense = totalExpense + res.data.amount;
       setTotalExpense(updatedExpense);
-
-      const updatedRemaining = initialTotalAmount - updatedExpense;
-      setRemainingAmount(updatedRemaining);
-      localStorage.setItem("remainingAmount", updatedRemaining);
 
       setDescription("");
       setAmount("");
@@ -129,10 +142,6 @@ const ExpenseBox = () => {
 
       const updatedTotalExpense = totalExpense - amountToRemove;
       setTotalExpense(updatedTotalExpense);
-
-      const updatedRemaining = initialTotalAmount - updatedTotalExpense;
-      setRemainingAmount(updatedRemaining);
-      localStorage.setItem("remainingAmount", updatedRemaining);
 
       showSuccess("Expense deleted successfully!");
     } catch (error) {
@@ -190,13 +199,21 @@ const ExpenseBox = () => {
 
   const greetingName =
     user?.name || user?.username || user?.firstName || user?.email?.split("@")?.[0] || "there";
-  const totalAmountValue = remainingAmount;
+  const remainingAmount = totalAmount - totalExpense;
 
+const navigate = useNavigate();
+
+const handleProfile = () => {
+  navigate("/profile");
+};
   const summaryCards = [
     {
-      title: "Total Amount",
-      value: formatCurrency(totalAmountValue),
-      subtitle: "Overall Balance",
+      title: "Account Balance",
+      value: totalAmount > 0 ? formatCurrency(remainingAmount) : "Not set",
+      subtitle:
+        totalAmount > 0
+          ? `Inital Amount you entered :- ${formatCurrency(totalAmount)}`
+          : "Enter your total amount below",
       icon: "fa fa-credit-card",
       tint: "green",
     },
@@ -217,6 +234,7 @@ const ExpenseBox = () => {
   ];
 
   return (
+    <>
     <div className="dashboard-page">
       <Sidebar />
 
@@ -238,22 +256,35 @@ const ExpenseBox = () => {
         )}
 
         <header className="dashboard-topbar">
-          <div className="hero-copy">
-            <p className="eyebrow">ExpenseSync</p>
+          <div className="hero-copyy">
             <h1>Welcome back, {greetingName}</h1>
             <p>Here's what is happening with your finances today.</p>
           </div>
 
           <div className="topbar-actions">
+            <form className="total-amount-form" onSubmit={handleSetTotalAmount}>
+              <label className="total-amount-label" htmlFor="total-amount-input">
+                Inital Amount
+              </label>
+              <div className="total-amount-shell">
+                <i className="fa fa-inr" aria-hidden="true" />
+                <input
+                  id="total-amount-input"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  placeholder="Enter total amount"
+                  value={totalAmountInput}
+                  onChange={handleTotalAmountChange}
+                />
+                <button type="submit">Save</button>
+              </div>
+            </form>
             <button className="month-pill" type="button">
               <i className="fa fa-calendar-o" aria-hidden="true" />
               <span>{currentMonthLabel}</span>
-              <i className="fa fa-chevron-down caret" aria-hidden="true" />
             </button>
-            <button className="ghost-icon" type="button" aria-label="Notifications">
-              <i className="fa fa-bell-o" aria-hidden="true" />
-            </button>
-            <div className="avatar-chip" aria-label="Profile avatar">
+            <div className="avatar-chip" aria-label="Profile avatar" onClick={handleProfile}>
               {String(greetingName).charAt(0).toUpperCase()}
             </div>
           </div>
@@ -284,6 +315,7 @@ const ExpenseBox = () => {
             </div>
 
             <form className="expense-form" onSubmit={handleSubmit}>
+              <div style={{display:"flex", flexDirection:"column", gap:"26px"}}>
               <label className="field-label">
                 Add Description
                 <div className="field-shell">
@@ -333,14 +365,16 @@ const ExpenseBox = () => {
                   </div>
                 </label>
               </div>
-
+              </div>
+              <div style={{width:"100%"}}>
               <button type="submit" className="primary-button">
                 Add Expense
               </button>
+              </div>
             </form>
           </article>
 
-          <article className="panel chart-panel">
+          <article className="panel chart-panel" style={{width: "40%"}}>
             <div className="panel-head">
               <h2>Category-wise Spending</h2>
             </div>
@@ -488,8 +522,12 @@ const ExpenseBox = () => {
             </div>
           )}
         </section>
+
+        
       </main>
     </div>
+    <Footer />
+    </>
   );
 };
 

@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from "react";
 import "./sidebar.css";
-import { Link } from 'react-router-dom';
-import axiosInstance from '../utils/axiosInstance';
-import { downloadAllTransactions, downloadTransactionsByDate } from "../utils/DownloadUtils";
-import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.jpg"
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import axiosInstance from "../utils/axiosInstance";
+import { AuthContext } from "../contexts/AuthContext";
+import {
+  downloadAllTransactions,
+  downloadTransactionsByDate,
+} from "../utils/DownloadUtils";
+import logo from "../assets/newLogo.png";
 
 const Sidebar = () => {
   const [showTransaction, setShowTransaction] = useState(false);
@@ -13,104 +16,115 @@ const Sidebar = () => {
   const [endDate, setEndDate] = useState("");
   const [expenses, setExpenses] = useState([]);
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axiosInstance.get("/expenses", {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
         setExpenses(res.data);
       } catch (err) {
-        console.error('Error fetching sidebar expenses:', err);
+        console.error("Error fetching sidebar expenses:", err);
       }
     };
+
     fetchExpenses();
   }, []);
 
   const handleDownload = () => {
     if (expenses.length === 0) {
-      // No expenses available; silently return
       return;
     }
     downloadAllTransactions(expenses);
   };
 
-  const navigate = useNavigate();
-
   const handleLogoutClick = () => {
-    
     setOpen(true);
   };
 
-
-  const ConfirmLogout = () => {
-     setOpen(false);
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      navigate("/login");
-    
-  };
-
-   const cancelLogout = () => {
+  const confirmLogout = () => {
     setOpen(false);
-    
+    logout();
+    navigate("/login", { replace: true });
   };
+
+  const cancelLogout = () => {
+    setOpen(false);
+  };
+
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="sidebar">
-           {open && (
-  <div className="overlay">
-    <div className="popup">
+    <aside className="sidebar">
+      {open && (
+        <div className="overlay">
+          <div className="popup">
+            <p className="popup-message">Are you sure you want to log out?</p>
+            <div className="popup-buttons">
+              <button onClick={cancelLogout} className="btn cancel-btn" type="button">
+                Cancel
+              </button>
+              <button onClick={confirmLogout} className="btn confirm-btn" type="button">
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
-      <p className="popup-message">
-        Are you sure you want to log out?
-      </p>
-
-      <div className="popup-buttons">
-        <button onClick={cancelLogout} className="btn cancel-btn">
-          Cancel
-        </button>
-
-        <button onClick={ConfirmLogout} className="btn confirm-btn">
-          Confirm
-        </button>
+      <div className="sidebar-top">
+        <div className="logo-block">
+          <img src={logo} alt="ExpenseSync logo" className="logo-image" />
+          <div>
+            <div className="logo-text">ExpenseSync</div>
+            <div className="logo-subtext">Financial control center</div>
+          </div>
+        </div>
       </div>
 
-    </div>
-  </div>
-)}
-      <div >
-        <div style={{ display: "flex", flexDirection: "column", gap: "5px" }} className="logo"><img src={logo} alt="logo" style={{ height: 50, width: 100, borderRadius: 6, marginRight: 8 }} />
-          ExpenseSync</div>
+      <nav className="sidebar-nav">
+        <div className="menu-section">
+          <div className="menu-title">Main Menu</div>
+          <Link className={`menu-item ${isActive("/expenseBox") ? "active" : ""}`} to="/expenseBox">
+            <i className="fa fa-home menu-icon" aria-hidden="true" />
+            <span>Dashboard</span>
+          </Link>
+          <Link className={`menu-item ${isActive("/statistics") ? "active" : ""}`} to="/statistics">
+            <i className="fa fa-bar-chart menu-icon" aria-hidden="true" />
+            <span>Statistics</span>
+          </Link>
+          <button className="menu-item menu-button" onClick={() => setShowTransaction((prev) => !prev)} type="button">
+            <i className="fa fa-exchange menu-icon" aria-hidden="true" />
+            <span>Transaction</span>
+          </button>
 
-        <ul className="menu-section">
-          <li className="menu-title">Main Menu</li>
-          <li className="menu-item active">
-            <Link to="/expenseBox" style={{ textDecoration: "none", color: "white" }}><i className="fa fa-home icon inline" /> Dashboard</Link>
-          </li>
-          <li className="menu-item">
-            <Link to="/statistics" style={{ textDecoration: "none", color: "#333" }}><i className="fa fa-bar-chart icon inline" /> Statistics</Link>
-          </li>
-          <li className="menu-item" onClick={() => setShowTransaction(!showTransaction)}>
-            <i className="fa fa-exchange icon inline" /> Transaction
-            {showTransaction && (
-              <ul className="submenu">
-                <li onClick={(handleDownload)}>Download all transactions</li>
-
-
-                <li onClick={() => setShowDateFilter(!showDateFilter)}>Download Date wise transactions</li>
-              </ul>
-            )}
-          </li>
+          {showTransaction && (
+            <div className="menu-item menu-button">
+              <button className="submenu-item" onClick={handleDownload} type="button">
+                Download all transactions
+              </button>
+              <button
+                className="submenu-item"
+                onClick={() => setShowDateFilter((prev) => !prev)}
+                type="button"
+              >
+                Download date-wise transactions
+              </button>
+            </div>
+          )}
 
           {showDateFilter && (
             <div className="date-filter">
               <input className="date" type="date" onChange={(e) => setStartDate(e.target.value)} />
               <input className="date" type="date" onChange={(e) => setEndDate(e.target.value)} />
               <button
-                style={{ border: "none",  }}
+                className="date-download-btn"
+                type="button"
                 onClick={() => {
                   downloadTransactionsByDate(expenses, startDate, endDate);
                   setShowDateFilter(false);
@@ -121,42 +135,36 @@ const Sidebar = () => {
             </div>
           )}
 
-          <li className="menu-item">
-            <Link to="/monthlyBudget" style={{ textDecoration: "none", color: "#333" }}><i className="fa fa-money icon inline" /> Monthly Budget Tracker</Link>
-          </li>
-
-          <li className="menu-item">
-            <Link to="/aiChat" style={{ textDecoration: "none", color: "#333" }}><i className="fa fa-comments icon inline" /> AI Chat</Link>
-          </li>
-
-        </ul>
-      </div>
-
-
-      <ul className="menu-section">
-        <li className="menu-title">Management</li>
-        <li className="menu-item">    <Link to="/help" style={{ textDecoration: "none", color: "#333" }}><i className="fa fa-question-circle icon inline" /> Help</Link></li>
-        <li className="menu-item">
-          <Link to="/profile" style={{ textDecoration: "none", color: "#333" }}><i className="fa fa-user icon inline" /> Profile</Link>
-        </li>
-        <li className="">
-          <button
-            onClick={handleLogoutClick}
-            style={{
-              width:"auto",
-              padding: "8px 16px",
-              background: "#ef4444",
-              color: "#fff",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer"
-            }}
+          <Link
+            className={`menu-item ${isActive("/monthlyBudget") ? "active" : ""}`}
+            to="/monthlyBudget"
           >
-            Logout
+            <i className="fa fa-line-chart menu-icon" aria-hidden="true" />
+            <span>Monthly Budget Tracker</span>
+          </Link>
+          <Link className={`menu-item ${isActive("/aiChat") ? "active" : ""}`} to="/aiChat">
+            <i className="fa fa-comments menu-icon" aria-hidden="true" />
+            <span>AI Chat</span>
+          </Link>
+        </div>
+
+        <div className="menu-section bottom">
+          <div className="menu-title">Management</div>
+          <Link className={`menu-item ${isActive("/help") ? "active" : ""}`} to="/help">
+            <i className="fa fa-question-circle menu-icon" aria-hidden="true" />
+            <span>Help</span>
+          </Link>
+          <Link className={`menu-item ${isActive("/profile") ? "active" : ""}`} to="/profile">
+            <i className="fa fa-user menu-icon" aria-hidden="true" />
+            <span>Profile</span>
+          </Link>
+          <button className="logout-button" onClick={handleLogoutClick} type="button">
+            <i className="fa fa-sign-out menu-icon" aria-hidden="true" />
+            <span>Logout</span>
           </button>
-        </li>
-      </ul>
-    </div>
+        </div>
+      </nav>
+    </aside>
   );
 };
 

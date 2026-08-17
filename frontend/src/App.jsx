@@ -31,11 +31,39 @@ function App() {
           <Route path="/" element={<LandingPage/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/statistics" element={<Stats />} />
+          <Route
+            path="/statistics"
+            element={
+              <PrivateRoute>
+                <Stats />
+              </PrivateRoute>
+            }
+          />
           <Route path="/help" element={<Help />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/monthlyBudget" element={<MonthlyBudgetTracker expenses />} />
-          <Route path="/aiChat" element={<AiChat />} />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/monthlyBudget"
+            element={
+              <PrivateRoute>
+                <MonthlyBudgetTracker expenses />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/aiChat"
+            element={
+              <PrivateRoute>
+                <AiChat />
+              </PrivateRoute>
+            }
+          />
           
           <Route
             path="/expenseBox"
