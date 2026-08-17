@@ -1,5 +1,5 @@
 import { model } from "../configs/gemini.js";
-import { llm } from "../configs/langchain.js";
+import { llm } from "../configs/langChain.js";
 
 
 export const askGemini = async (prompt) => {
