@@ -2,12 +2,19 @@
 .ai-chat-container {
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
   height: 100%;
   background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(23, 43, 77, 0.08);
   overflow: hidden;
   margin: 0px 40px;
+}
+
+.ai-chat-wrapper {
+  min-height: 0;
+  overflow: hidden;
 }
 
 .chat-header {
@@ -24,6 +31,11 @@
   font-size: 16px;
 }
 
+.status-clear-container{
+  display: flex;
+  gap: 12px;
+}
+
 .chat-header .status {
   font-size: 12px;
   opacity: 0.95;
@@ -31,9 +43,19 @@
   padding: 6px 10px;
   border-radius: 999px;
 }
+.chat-header .clearChat {
+  font-size: 12px;
+  opacity: 0.95;
+  background: rgba(255,255,255,0.12);
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  color:rgb(154, 70, 70)
+}
 
 .messages {
   flex: 1 1 auto;
+  min-height: 0;
   padding: 18px;
   overflow-y: auto;
   display: flex;

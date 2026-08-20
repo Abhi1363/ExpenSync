@@ -34,6 +34,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
+    localStorage.removeItem("chatMessages");
   };
 
   return (

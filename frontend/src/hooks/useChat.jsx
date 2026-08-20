@@ -82,6 +82,7 @@ export default function useChat() {
     return {
         messages,
         loading,
+        setMessage: setMessages,
         sendMessage
     };
 }
